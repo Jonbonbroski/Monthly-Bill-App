@@ -8,6 +8,11 @@
     document.getElementById("billList").innerHTML = ""
  };
 
+
+ //bill  current values 
+ let currentName;
+ let currentAmount;
+ let currentDay;
 //modal toggle
 const modalToggle = (btn) =>{
     // let billToEdit = btn.parentElement.parentElement
@@ -18,10 +23,13 @@ const modalToggle = (btn) =>{
     
     console.log("EDIT MODAL TOGGLE",btn.parentElement.parentElement)
     let billToEdit = btn.parentElement.parentElement;
-    document.getElementById("editName").value = billToEdit.children[1].attributes.value.value;
-    document.getElementById("editModalTitle").textContent = "Edit bill: "+ billToEdit.children[1].attributes.value.value;
-    document.getElementById("editAmount").value = billToEdit.children[2].attributes.value.value;
-    document.getElementById("editDay").value = billToEdit.children[3].attributes.value.value;
+    currentName = billToEdit.children[1].attributes.value.value;
+    currentAmount = billToEdit.children[2].attributes.value.value;
+    currentDay = billToEdit.children[3].attributes.value.value;
+    document.getElementById("editName").value = currentName;
+    document.getElementById("editModalTitle").textContent = "Edit bill: "+ currentName;
+    document.getElementById("editAmount").value = currentAmount;
+    document.getElementById("editDay").value = currentDay;
 
     }
     let stuff ="YES"
@@ -164,16 +172,21 @@ const deleteBill = async (btn)=> {
     await fetchBills();
  };
 
-const editBill = async ()=>{
-  
 
+const editBill = async ()=>{
+
+ console.log("EDIT THIS BILL")
     await fetch("http://localhost:5000/editBill",{
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({
             name:document.getElementById("editName").value,
             amount:document.getElementById("editAmount").value,
-            day:document.getElementById("editDay").value
+            day:document.getElementById("editDay").value,
+            editName:  currentName,
+            editAmount: currentAmount,
+            editDay: currentDay
+
         })
         })
         .then(response=>{

@@ -73,8 +73,9 @@ app.delete("/deleteBill",(req,res)=>{
 })
 
 app.put("/editBill",(req,res)=>{
-    console.log("Delete request was made")
-    Bills.updateOne({name:req.body.name,amount:req.body.amount,day:req.body.day},(err,result)=>{
+    console.log("Edit request was made")
+    Bills.updateOne({name:req.body.editName,amount:req.body.editAmount,day:req.body.editDay},{name:req.body.name,
+    amount:req.body.amount, day:req.body.day},(err,result)=>{
         if(err){
             console.log(err)
         }else{
